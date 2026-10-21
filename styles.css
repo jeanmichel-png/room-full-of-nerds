@@ -127,7 +127,13 @@ h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
 }
 .site-nav.is-scrolled { border-bottom-color: var(--hairline); background: rgba(255, 255, 255, 0.86); }
 .site-nav .container { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; }
-.logo { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+.logo { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+.logo-mark { display: inline-flex; width: 2rem; color: var(--blue); }
+.logo-mark svg { width: 100%; height: auto; overflow: visible; }
+.logo-mark .lens-l { transform-box: fill-box; transform-origin: center; }
+.logo:hover .lens-l { animation: wink 0.55s var(--ease); }
+@keyframes wink { 0%, 100% { transform: scaleY(1); } 45% { transform: scaleY(0.1); } }
+@media (prefers-reduced-motion: reduce) { .logo:hover .lens-l { animation: none; } }
 .nav-links { display: flex; align-items: center; gap: 1.9rem; }
 .nav-links a { font-size: 0.9rem; font-weight: 400; color: var(--ink); text-decoration: none; transition: color 0.2s var(--ease); }
 .nav-links a:hover, .nav-links a.active { color: var(--blue); }
@@ -261,7 +267,11 @@ h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
 
 /* ===== Footer ===== */
 footer { padding: 3.5rem 0; background: var(--canvas); border-top: 1px solid var(--hairline); color: var(--ink-faint); text-align: center; font-size: 0.9rem; line-height: 1.8; }
+.footer-brand { display: inline-flex; align-items: center; gap: 0.6rem; justify-content: center; font-size: 1.0625rem; font-weight: 600; color: var(--ink); text-decoration: none; margin-bottom: 1.75rem; }
+.footer-brand .logo-mark { width: 2rem; color: var(--blue); }
+.footer-brand:hover .lens-l { animation: wink 0.55s var(--ease); }
 .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 2rem; margin-bottom: 1.75rem; }
+.footer-quip { margin-top: 0.4rem; font-size: 0.85rem; color: var(--ink-faint); }
 .footer-links a { color: var(--ink); font-size: 0.9rem; text-decoration: none; }
 .footer-links a:hover { color: var(--blue); }
 .footer-email { color: var(--blue); text-decoration: none; }
