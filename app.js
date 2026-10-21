@@ -1,0 +1,93 @@
+/* ===== Room Full of Nerds — shared behaviour + scroll motion ===== */
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Mobile menu ---- */
+  const nav = document.querySelector('.site-nav');
+  if (nav) {
+    const toggle = nav.querySelector('.nav-toggle');
+    const setMenu = (open) => {
+      nav.classList.toggle('is-open', open);
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.textContent = open ? 'Close' : 'Menu';
+      }
+    };
+    if (toggle) toggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+    nav.querySelectorAll('.nav-links a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  /* ---- Scroll progress bar ---- */
+  const progress = document.querySelector('.scroll-progress');
+  const parallaxEls = [...document.querySelectorAll('[data-parallax]')];
+
+  const onScrollFrame = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    /* nav hairline */
+    if (nav) nav.classList.toggle('is-scrolled', scrollTop > 10);
+    /* progress */
+    if (progress) {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 0 ? Math.min(scrollTop / h, 1) : 0;
+      progress.style.transform = `scaleX(${pct})`;
+    }
+    /* parallax: move each element against the scroll by its speed */
+    if (!reduceMotion) {
+      for (const el of parallaxEls) {
+        const speed = parseFloat(el.dataset.parallax) || 0;
+        const rect = el.getBoundingClientRect();
+        const centre = rect.top + rect.height / 2 - window.innerHeight / 2;
+        el.style.transform = `translate3d(0, ${(-centre * speed).toFixed(1)}px, 0)`;
+      }
+    }
+  };
+
+  let ticking = false;
+  const requestFrame = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { onScrollFrame(); ticking = false; });
+  };
+  window.addEventListener('scroll', requestFrame, { passive: true });
+  window.addEventListener('resize', requestFrame, { passive: true });
+  onScrollFrame();
+
+  /* ---- Flourishing reveals ---- */
+  const revealTargets = document.querySelectorAll('[data-reveal], [data-reveal-group]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealTargets.forEach((el) => io.observe(el));
+  }
+
+  /* ---- Testimonial carousel (present only on some pages) ---- */
+  const track = document.querySelector('.carousel-track');
+  if (track) {
+    const slides = track.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.carousel-dots button');
+    let current = 0;
+    const mark = (i) => {
+      current = i;
+      dots.forEach((dot, n) => dot.setAttribute('aria-current', String(n === i)));
+    };
+    const go = (i) => {
+      const n = (i + slides.length) % slides.length;
+      track.scrollTo({ left: n * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+      mark(n);
+    };
+    document.querySelectorAll('.carousel-btn').forEach((btn) =>
+      btn.addEventListener('click', () => go(current + Number(btn.dataset.dir))));
+    dots.forEach((dot, n) => dot.addEventListener('click', () => go(n)));
+    let settle;
+    track.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => mark(Math.round(track.scrollLeft / track.clientWidth)), 100);
+    }, { passive: true });
+  }
+})();
