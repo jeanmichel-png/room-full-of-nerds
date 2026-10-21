@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Full of Nerds — Smart Homes, Smarter Systems</title>
+<meta name="description" content="Smart, simple, and reliable tech for homes and businesses. We build AI systems, networks, and data setups — without the jargon. Based in Hackney, London.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Apple HIG tokens ===== */
+:root {
+  --blue: #0066cc;        /* Action Blue — the only accent */
+  --blue-focus: #0071e3;  /* focus / hover */
+  --blue-on-dark: #2997ff;/* accent on dark surfaces */
+  --ink: #1d1d1f;         /* near-black — headlines + body */
+  --ink-muted: #6e6e73;   /* secondary copy */
+  --ink-faint: #86868b;   /* captions on parchment */
+  --canvas: #ffffff;
+  --parchment: #f5f5f7;   /* signature off-white */
+  --pearl: #fafafc;
+  --tile: #1d1d1f;        /* dark statement tile */
+  --hairline: #e0e0e0;
+  --divider: #f0f0f0;
+  --on-dark: #ffffff;
+  --on-dark-muted: #a1a1a6;
+
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+  --max: 1120px;
+  --gutter: 2.5rem;
+  --section-y: 7.5rem;
+  --nav-h: 48px;
+  --r-card: 18px;
+  --r-lg: 24px;
+  --pill: 999px;
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* ===== Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--nav-h) + 12px); -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body {
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+ul, ol { list-style: none; }
+a { color: var(--blue); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--blue-focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+section { position: relative; padding: var(--section-y) 0; }
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.021em;
+  color: var(--ink);
+}
+h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.eyebrow {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--blue);
+  margin-bottom: 0.9rem;
+}
+.lead {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+.section-head { max-width: 42rem; margin-bottom: 3.5rem; }
+
+/* quiet scroll-reveal */
+[data-reveal], [data-reveal-group] > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+}
+[data-reveal].in, [data-reveal-group].in > * { opacity: 1; transform: none; }
+[data-reveal-group].in > *:nth-child(2) { transition-delay: 0.06s; }
+[data-reveal-group].in > *:nth-child(3) { transition-delay: 0.12s; }
+[data-reveal-group].in > *:nth-child(4) { transition-delay: 0.18s; }
+[data-reveal-group].in > *:nth-child(5) { transition-delay: 0.24s; }
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal-group] > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ===== Buttons — pill CTAs ===== */
+.button-group { display: flex; flex-wrap: wrap; gap: 1rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--pill);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.15s var(--ease);
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-focus); }
+.btn-outline { background: transparent; color: var(--blue); border-color: var(--blue); }
+.btn-outline:hover { background: rgba(0, 102, 204, 0.06); }
+.link-cta { color: var(--blue); font-size: 1.0625rem; font-weight: 400; text-decoration: none; }
+.link-cta:hover { text-decoration: underline; }
+/* on dark tiles */
+.on-dark .btn-primary { background: var(--blue); color: #fff; }
+.on-dark .btn-outline { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+.on-dark .btn-outline:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
+
+/* ===== Nav ===== */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.site-nav.is-scrolled { border-bottom-color: var(--hairline); background: rgba(255, 255, 255, 0.86); }
+.site-nav .container { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; }
+.logo { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links a { font-size: 0.9rem; font-weight: 400; color: var(--ink); text-decoration: none; transition: color 0.2s var(--ease); }
+.nav-links a:hover { color: var(--blue); }
+.nav-links a.active { color: var(--blue); }
+.nav-links .nav-cta { color: #fff; background: var(--blue); border-radius: var(--pill); padding: 0.4rem 1rem; }
+.nav-links .nav-cta:hover { background: var(--blue-focus); color: #fff; }
+.nav-toggle {
+  display: none;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 0.9rem;
+  background: transparent;
+  border: 1px solid var(--hairline);
+  border-radius: var(--pill);
+  color: var(--ink);
+  font: 400 0.85rem/1 var(--font);
+  cursor: pointer;
+}
+
+/* ===== 1 Hero ===== */
+#hero { padding-top: calc(var(--nav-h) + 5rem); padding-bottom: 5rem; text-align: center; background: var(--canvas); }
+.hero-inner { display: flex; flex-direction: column; align-items: center; }
+#hero h1 {
+  font-size: clamp(2.6rem, 6.2vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.027em;
+  color: var(--ink);
+  max-width: 16ch;
+}
+#hero .lead { margin: 1.4rem 0 0; max-width: 34rem; }
+#hero .button-group { margin-top: 2.2rem; justify-content: center; align-items: center; }
+.hero-media {
+  margin-top: 4rem;
+  width: 100%;
+  max-width: 980px;
+  aspect-ratio: 3 / 1.55;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--parchment);
+  box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+.hero-media .photo-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  font-size: 0.8rem; color: var(--ink-faint); text-align: center;
+}
+.hero-media img { position: relative; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+
+/* ===== 2 What We Do ===== */
+#what-we-do { background: var(--parchment); }
+.two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.wwd-card { background: var(--canvas); border: 1px solid var(--hairline); border-radius: var(--r-card); padding: 2.25rem; }
+.wwd-card h3 { margin-bottom: 1.25rem; }
+.wwd-card li {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--divider);
+  font-size: 1.0625rem;
+  color: var(--ink);
+}
+.wwd-card li:first-of-type { border-top: 0; }
+.wwd-card li svg { flex-shrink: 0; width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; color: var(--blue); }
+
+/* ===== 3 Why Us ===== */
+#why-us { background: var(--canvas); }
+#why-us .lead { margin-bottom: 0.9rem; max-width: 44rem; }
+#why-us .lead:last-of-type { margin-bottom: 0; }
+.highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+.highlight-item {
+  display: flex; flex-direction: column; gap: 1.1rem;
+  padding: 1.9rem;
+  background: var(--parchment);
+  border-radius: var(--r-card);
+  font-size: 1.0625rem; font-weight: 600; color: var(--ink);
+}
+.highlight-item .tick {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem;
+  border-radius: var(--pill);
+  background: rgba(0, 102, 204, 0.1);
+  color: var(--blue);
+}
+.highlight-item .tick svg { width: 1.3rem; height: 1.3rem; }
+
+/* ===== 4 Services ===== */
+#services { background: var(--parchment); }
+.services-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+.service-card {
+  grid-column: span 2;
+  padding: 2.25rem;
+  background: var(--canvas);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-card);
+  transition: border-color 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+.service-card:nth-child(n + 4) { grid-column: span 3; }
+.service-card:hover { border-color: #d2d2d7; background: var(--pearl); }
+.service-card .icon { display: block; margin-bottom: 1.5rem; color: var(--blue); }
+.service-card .icon svg { width: 2rem; height: 2rem; }
+.service-card h3 { margin-bottom: 0.5rem; }
+.service-card p { color: var(--ink-muted); font-size: 1.0625rem; }
+
+/* ===== 5 Profit for Purpose — the dark statement tile ===== */
+#profit { background: var(--tile); color: var(--on-dark); text-align: center; }
+#profit h2 { color: var(--on-dark); margin-bottom: 1.25rem; }
+#profit .lead { max-width: 40rem; margin: 0 auto; color: var(--on-dark-muted); }
+#profit .lead strong { color: var(--on-dark); font-weight: 600; }
+
+/* ===== 6 How It Works ===== */
+#how-it-works { background: var(--canvas); }
+.steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.steps::before {
+  content: ''; position: absolute; top: 28px; left: 12%; right: 12%;
+  height: 1px; background: var(--hairline); z-index: 0;
+}
+.step { position: relative; z-index: 1; text-align: center; }
+.step-number {
+  display: flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; margin: 0 auto 1.25rem;
+  border-radius: var(--pill);
+  background: var(--canvas);
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  font-size: 1.25rem; font-weight: 600;
+}
+.step h3 { font-size: 1.1rem; }
+
+/* ===== 7 Workshops ===== */
+#workshops { background: var(--parchment); text-align: center; }
+#workshops .lead { max-width: 36rem; margin: 1.3rem auto 2.4rem; }
+
+/* ===== 8 Testimonials ===== */
+#testimonials { background: var(--canvas); }
+.carousel { margin-top: 1rem; }
+.carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+.slide { flex: 0 0 100%; scroll-snap-align: start; padding-right: 1rem; }
+.slide blockquote {
+  max-width: 24ch;
+  font-size: clamp(1.7rem, 3.6vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.carousel-controls { display: flex; align-items: center; gap: 1.25rem; margin-top: 2.5rem; }
+.carousel-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.75rem; height: 2.75rem;
+  background: var(--canvas); border: 1px solid var(--hairline);
+  border-radius: var(--pill); color: var(--ink);
+  cursor: pointer; transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.carousel-btn svg { width: 1.1rem; height: 1.1rem; }
+.carousel-btn:hover { border-color: var(--blue); color: var(--blue); }
+.carousel-dots { display: flex; gap: 0.5rem; }
+.carousel-dots button {
+  width: 8px; height: 8px; border: 0; border-radius: var(--pill);
+  background: var(--hairline); cursor: pointer; transition: width 0.25s var(--ease), background-color 0.25s var(--ease);
+}
+.carousel-dots button[aria-current='true'] { width: 22px; background: var(--blue); }
+
+/* ===== 9 About ===== */
+#about { background: var(--parchment); }
+#about .lead { max-width: 46rem; }
+
+/* ===== 10 Contact ===== */
+#contact { background: var(--canvas); text-align: center; }
+#contact .lead { max-width: 40rem; margin: 1.3rem auto 2.4rem; }
+#contact .button-group { justify-content: center; }
+
+/* ===== Footer ===== */
+footer { padding: 3.5rem 0; background: var(--canvas); border-top: 1px solid var(--hairline); color: var(--ink-faint); text-align: center; font-size: 0.9rem; line-height: 1.8; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 2rem; margin-bottom: 1.75rem; }
+.footer-links a { color: var(--ink); font-size: 0.9rem; text-decoration: none; }
+.footer-links a:hover { color: var(--blue); }
+.footer-email { color: var(--blue); text-decoration: none; }
+.tagline { margin-top: 2rem; font-size: 0.9rem; line-height: 1.9; color: var(--ink-faint); }
+.tagline strong { color: var(--ink); font-weight: 600; }
+
+/* ===== Tablet ===== */
+@media (max-width: 968px) {
+  :root { --gutter: 1.75rem; --section-y: 5rem; }
+  .section-head { margin-bottom: 2.5rem; }
+  .two-column { grid-template-columns: 1fr; }
+  .highlights { grid-template-columns: 1fr 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .service-card, .service-card:nth-child(n + 4) { grid-column: auto; }
+  .service-card:last-child { grid-column: 1 / -1; }
+  .steps { gap: 1.5rem; }
+  .steps::before { display: none; }
+}
+
+/* ===== Phone ===== */
+@media (max-width: 720px) {
+  :root { --gutter: 1.25rem; }
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 0.5rem var(--gutter) 1rem;
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .site-nav.is-open .nav-links { display: flex; }
+  .nav-links a { padding: 0.85rem 0; border-top: 1px solid var(--divider); font-size: 1.05rem; }
+  .nav-links .nav-cta { margin-top: 0.75rem; text-align: center; border-top: 0; }
+  .hero-media { aspect-ratio: 3 / 2.4; }
+  .highlights, .services-grid { grid-template-columns: 1fr; }
+  .service-card:last-child { grid-column: auto; }
+  .steps { grid-template-columns: 1fr; gap: 1rem; }
+  .step { display: flex; align-items: center; gap: 1.1rem; text-align: left; }
+  .step-number { flex-shrink: 0; margin: 0; }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Main">
+  <div class="container">
+    <a href="#hero" class="logo">Room Full of Nerds</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#workshops">Workshops</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 1 · Hero -->
+  <section id="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow" data-reveal>Smart home &amp; AI · Hackney</p>
+      <h1 data-reveal>AI for everyday. Systems for life.</h1>
+      <p class="lead" data-reveal>Smart, simple, and reliable tech for homes and businesses. We build AI systems, networks, and data setups — without the jargon.</p>
+      <div class="button-group" data-reveal>
+        <a href="#contact" class="btn btn-primary">Book a Consultation</a>
+        <a href="#what-we-do" class="link-cta">What We Do &rsaquo;</a>
+      </div>
+      <div class="hero-media" data-reveal>
+        <!-- PLACEHOLDER shows until images/hero.jpg exists -->
+        <div class="photo-placeholder">Hero photo · Hackney home or creative workspace · warm light · 2400 × 1600</div>
+        <img src="images/hero.jpg" alt="A warm Hackney home workspace with integrated smart-home technology" fetchpriority="high" onerror="this.remove()">
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · What We Do -->
+  <section id="what-we-do">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">What We Do</p>
+        <h2>Two sides, one standard.</h2>
+      </div>
+      <div class="two-column" data-reveal-group>
+        <div class="wwd-card">
+          <h3>AI &amp; Systems</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>AI for your 9-to-5 or small business</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Workflow automation and creative tools</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Smart systems for content and planning</li>
+          </ul>
+        </div>
+        <div class="wwd-card">
+          <h3>Home &amp; Business Infrastructure</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Whole-home Wi-Fi mesh installs</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Smart cameras and security</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Backup and data storage</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Ongoing support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Why Us -->
+  <section id="why-us">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Why Us</p>
+        <h2>We’re not IT guys. We’re nerds with taste.</h2>
+        <p class="lead">We design clean, reliable systems with real human support.</p>
+        <p class="lead">Our roots are in production, creative tech, and AI — so we understand real-world workflows.</p>
+      </div>
+      <ul class="highlights" data-reveal-group>
+        <li class="highlight-item">
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span>Local (Hackney)</span>
+        </li>
+        <li class="highlight-item">
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span>Plain English</span>
+        </li>
+        <li class="highlight-item">
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span>Designed around you</span>
+        </li>
+        <li class="highlight-item">
+          <span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+          <span>Long-term support</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4 · Services -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Services</p>
+        <h2>Everything your setup needs.</h2>
+      </div>
+      <div class="services-grid" data-reveal-group>
+        <article class="service-card">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg></span>
+          <h3>AI Systems &amp; Strategy</h3>
+          <p>Integrate AI tools into your workflow</p>
+        </article>
+        <article class="service-card">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5a12 12 0 0116 0"/><path d="M7 13a7.5 7.5 0 0110 0"/><path d="M9.7 16.3a3.5 3.5 0 014.6 0"/><circle cx="12" cy="19.4" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <h3>Home Tech &amp; Networking</h3>
+          <p>Build a fast, stable connection</p>
+        </article>
+        <article class="service-card">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.1c0 4.4-3 8.1-7 10.1-4-2-7-5.7-7-10.1V5.8z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <h3>Security &amp; Cameras</h3>
+          <p>Discreet installs that just work</p>
+        </article>
+        <article class="service-card">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6"/><path d="M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6"/></svg></span>
+          <h3>Data Backup &amp; Storage</h3>
+          <p>Local NAS or cloud sync</p>
+        </article>
+        <article class="service-card">
+          <span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-4 10 4-10 4z"/><path d="M6 11v4.5c0 1.5 2.7 2.8 6 2.8s6-1.3 6-2.8V11"/><path d="M22 9v5"/></svg></span>
+          <h3>Workshops &amp; Clinics</h3>
+          <p>Learn to make tech behave</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · Profit for Purpose -->
+  <section id="profit" class="on-dark">
+    <div class="container" data-reveal>
+      <h2>Tech that gives back.</h2>
+      <!-- TODO before launch: name the charities and how the 50% is calculated -->
+      <p class="lead"><strong>50% of profits go to Hackney Children’s and Baby charities.</strong> Every setup helps local families — real impact, not empty words.</p>
+    </div>
+  </section>
+
+  <!-- 6 · How It Works -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">How It Works</p>
+        <h2>Four steps, no surprises.</h2>
+      </div>
+      <ol class="steps" data-reveal-group>
+        <li class="step"><span class="step-number">1</span><h3>Chat with us</h3></li>
+        <li class="step"><span class="step-number">2</span><h3>Plan your setup</h3></li>
+        <li class="step"><span class="step-number">3</span><h3>Install &amp; optimise</h3></li>
+        <li class="step"><span class="step-number">4</span><h3>Support &amp; evolve</h3></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 7 · Workshops -->
+  <section id="workshops">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Workshops</p>
+      <h2>Every two months, we open the doors.</h2>
+      <p class="lead">Free bi-monthly Hackney workshops on AI, automation, and home tech — friendly, open, useful.</p>
+      <!-- TODO: link to the real dates page (Luma / Eventbrite / Meetup) -->
+      <a href="#contact" class="btn btn-primary">See Upcoming Dates</a>
+    </div>
+  </section>
+
+  <!-- 8 · Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">What People Say</p>
+        <h2>Kind words from the neighbourhood.</h2>
+      </div>
+      <!-- PLACEHOLDER COPY from the brief. Replace with real client quotes (first name + area) and keep the originals on file before launch. -->
+      <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Testimonials" data-reveal>
+        <div class="carousel-track" tabindex="0">
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <blockquote>“Finally, someone who explains tech without making you feel stupid.”</blockquote>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <blockquote>“They fixed our Wi-Fi and taught us AI in one afternoon.”</blockquote>
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <blockquote>“Hackney needed this — local, human, and actually useful.”</blockquote>
+          </figure>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" type="button" data-dir="-1" aria-label="Previous quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <div class="carousel-dots">
+            <button type="button" aria-label="Quote 1" aria-current="true"></button>
+            <button type="button" aria-label="Quote 2" aria-current="false"></button>
+            <button type="button" aria-label="Quote 3" aria-current="false"></button>
+          </div>
+          <button class="carousel-btn" type="button" data-dir="1" aria-label="Next quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head" data-reveal style="margin-bottom: 0">
+        <p class="eyebrow">About</p>
+        <h2>A small team of big nerds.</h2>
+        <p class="lead" style="margin-top: 1.3rem">Creative technologists from London’s production and design scene. We’ve built AI systems for agencies, networks for studios, and smart homes that just work — now bringing that know-how to everyday people.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · Contact -->
+  <section id="contact">
+    <div class="container" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2>Ready to nerd out?</h2>
+      <p class="lead">Tell us what’s broken — your Wi-Fi, your workflow, or your backup — and we’ll fix it.</p>
+      <div class="button-group">
+        <!-- TODO: booking link (Cal.com / Calendly) -->
+        <a href="#contact" class="btn btn-primary">Book a Visit</a>
+        <!-- TODO: confirm this inbox exists -->
+        <a href="mailto:hello@roomfullofnerds.com" class="btn btn-outline">Email Us</a>
+        <!-- TODO: https://wa.me/44XXXXXXXXXX (international format, no + or spaces) -->
+        <a href="#contact" class="btn btn-outline">WhatsApp the Nerds</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <nav aria-label="Footer">
+      <ul class="footer-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#workshops">Workshops</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <p><a class="footer-email" href="mailto:hello@roomfullofnerds.com">hello@roomfullofnerds.com</a></p>
+    <p>Based in Hackney, London.</p>
+    <!-- TODO if trading as a Ltd: registered name, company number, registered office, place of registration -->
+    <p class="tagline"><strong>Room Full of Nerds — Smart Homes, Smarter Systems.</strong><br>50% of profits go to Hackney Children’s and Baby charities.</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Phone menu */
+  const nav = document.querySelector('.site-nav');
+  const toggle = nav.querySelector('.nav-toggle');
+  const setMenu = (open) => {
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.textContent = open ? 'Close' : 'Menu';
+  };
+  toggle.addEventListener('click', () => setMenu(!nav.classList.contains('is-open')));
+  nav.querySelectorAll('.nav-links a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  /* Nav hairline on scroll */
+  const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 10);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* Quiet scroll-reveal */
+  const revealTargets = document.querySelectorAll('[data-reveal], [data-reveal-group]');
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); obs.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealTargets.forEach((el) => io.observe(el));
+  }
+
+  /* Active nav link */
+  const navLinks = [...nav.querySelectorAll('.nav-links a')];
+  const linkFor = (id) => navLinks.find((a) => a.getAttribute('href') === '#' + id);
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const link = linkFor(entry.target.id);
+        if (!link) return;
+        navLinks.forEach((a) => a.classList.remove('active'));
+        link.classList.add('active');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['hero', 'services', 'workshops', 'about', 'contact'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
+  }
+
+  /* Testimonial carousel */
+  const track = document.querySelector('.carousel-track');
+  if (!track) return;
+  const slides = track.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.carousel-dots button');
+  let current = 0;
+  const mark = (i) => {
+    current = i;
+    dots.forEach((dot, n) => dot.setAttribute('aria-current', String(n === i)));
+  };
+  const go = (i) => {
+    const n = (i + slides.length) % slides.length;
+    track.scrollTo({ left: n * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+    mark(n);
+  };
+  document.querySelectorAll('.carousel-btn').forEach((btn) =>
+    btn.addEventListener('click', () => go(current + Number(btn.dataset.dir))));
+  dots.forEach((dot, n) => dot.addEventListener('click', () => go(n)));
+  let settle;
+  track.addEventListener('scroll', () => {
+    clearTimeout(settle);
+    settle = setTimeout(() => mark(Math.round(track.scrollLeft / track.clientWidth)), 100);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
