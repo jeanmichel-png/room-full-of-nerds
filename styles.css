@@ -220,6 +220,53 @@ h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
 .compare-arrow { align-self: center; color: var(--blue); font-size: 1.3rem; line-height: 1; }
 @media (max-width: 768px) { .feature-card { grid-template-columns: 1fr; gap: 2rem; padding: 2rem; } }
 
+/* ===== Device rotator (rotating kit illustrations) ===== */
+.device-rotator { display: flex; flex-direction: column; align-items: center; gap: 1.1rem; }
+.dr-stage {
+  position: relative; width: 220px; height: 236px;
+  perspective: 1000px; transform-style: preserve-3d;
+}
+.dr-stage::before {
+  content: ''; position: absolute; top: 46%; left: 50%; z-index: 0;
+  width: 210px; height: 210px; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.07), transparent 68%);
+  border-radius: 50%; pointer-events: none;
+}
+.dr-item {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  opacity: 0; transform: rotateY(-38deg) scale(0.88);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  backface-visibility: hidden; pointer-events: none;
+}
+.dr-item.is-active { opacity: 1; transform: none; }
+.dr-art { color: var(--blue); line-height: 0; }
+.dr-art svg { width: clamp(150px, 48vw, 178px); height: auto; overflow: visible; }
+.dr-caption { font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+
+/* idle micro-animations — only while the device is the visible one */
+@keyframes dr-blink  { 0%, 100% { opacity: 1; } 50% { opacity: 0.18; } }
+@keyframes dr-cursor { 0% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes dr-ripple { 0% { opacity: 0.14; } 42% { opacity: 1; } 100% { opacity: 0.14; } }
+@keyframes dr-spin   { to { transform: rotate(360deg); } }
+@keyframes dr-wave   { 0%, 100% { opacity: 0.35; transform: scaleY(0.6); } 50% { opacity: 1; transform: scaleY(1); } }
+
+.dr-item.is-active .dr-blink  { animation: dr-blink 1.5s var(--ease) infinite; }
+.dr-item.is-active .dr-cursor { animation: dr-cursor 1.06s step-end infinite; }
+.dr-item.is-active .dr-arc    { animation: dr-ripple 2.6s var(--ease) infinite; }
+.dr-item.is-active .dr-arc-2  { animation-delay: 0.28s; }
+.dr-item.is-active .dr-arc-3  { animation-delay: 0.56s; }
+.dr-spin  { transform-box: view-box; transform-origin: 52px 60px; }
+.dr-item.is-active .dr-spin   { animation: dr-spin 3.6s linear infinite; }
+.dr-wave  { transform-box: fill-box; transform-origin: center; }
+.dr-item.is-active .dr-wave   { animation: dr-wave 2.4s var(--ease) infinite; }
+
+/* reduced motion: no flip, no idle motion — one static device */
+@media (prefers-reduced-motion: reduce) {
+  .device-rotator .dr-item { transition: none !important; }
+  .device-rotator * { animation: none !important; }
+}
+
 /* ===== Dark statement tile ===== */
 .tile-section { background: var(--tile); color: var(--on-dark); text-align: center; }
 .tile-section h2 { color: var(--on-dark); margin-bottom: 1.25rem; }

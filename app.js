@@ -105,3 +105,18 @@
     }, { passive: true });
   }
 })();
+
+/* Device rotator — independent of the main app IIFE */
+(function () {
+  var root = document.querySelector('.device-rotator');
+  if (!root) return;
+  var items = root.querySelectorAll('[data-dr]');
+  if (items.length < 2) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0;
+  setInterval(function () {
+    items[i].classList.remove('is-active');
+    i = (i + 1) % items.length;
+    items[i].classList.add('is-active');
+  }, 2800);
+})();
