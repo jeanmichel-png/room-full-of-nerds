@@ -106,17 +106,21 @@
   }
 })();
 
-/* Device rotator — independent of the main app IIFE */
-(function () {
-  var root = document.querySelector('.device-rotator');
-  if (!root) return;
-  var items = root.querySelectorAll('[data-dr]');
-  if (items.length < 2) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var i = 0;
-  setInterval(function () {
-    items[i].classList.remove('is-active');
-    i = (i + 1) % items.length;
-    items[i].classList.add('is-active');
-  }, 2800);
+/* Photorealistic product turntables: complete a turn before changing devices. */
+(() => {
+ const root=document.querySelector('.device-rotator'); if(!root)return;
+ const items=[...root.querySelectorAll('[data-dr]')], videos=items.map(el=>el.querySelector('video'));
+ const labels=['Network storage','Security cameras','Macs & workstations','Whole-home Wi-Fi','Backups & drives','Smart home & AI'];
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const button=root.querySelector('.dr-pause'); let index=0, paused=reduced.matches, visible=false;
+ const sync=()=>{videos.forEach((v,n)=>{if(n===index&&!paused&&visible&&!document.hidden){v.muted=true;v.play().catch(()=>{});}else v.pause();});button.textContent=paused?'Play rotation':'Pause rotation';};
+ const show=n=>{videos[index].pause();index=(n+items.length)%items.length;items.forEach((el,i)=>{el.classList.toggle('is-active',i===index);el.setAttribute('aria-hidden',String(i!==index));});videos[index].currentTime=0;root.querySelector('.dr-caption').textContent=labels[index];sync();};
+ videos.forEach(v=>v.addEventListener('ended',()=>{if(!paused)show(index+1);}));
+ button.addEventListener('click',()=>{paused=!paused;sync();});
+ root.querySelector('.dr-prev').addEventListener('click',()=>show(index-1));
+ root.querySelector('.dr-next').addEventListener('click',()=>show(index+1));
+ new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:0.15}).observe(root);
+ document.addEventListener('visibilitychange',sync);
+ reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});
+ sync();
 })();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Cg%20fill='none'%20stroke='%230066cc'%20stroke-width='2.6'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Ccircle%20cx='11'%20cy='17'%20r='5.5'/%3E%3Ccircle%20cx='21'%20cy='17'%20r='5.5'/%3E%3Cpath%20d='M15.5%2016.5q1.5-1.2%203%200'/%3E%3Cpath%20d='M5.5%2015%203%2013'/%3E%3Cpath%20d='M26.5%2015%2029%2013'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=turntables1">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -58,104 +58,17 @@
         <p class="eyebrow">What we install</p>
         <h2>The kit, handled.</h2>
       </div>
-      <div class="device-rotator" role="img" aria-label="Illustrations of the kit we install — NAS, cameras, Macs and Wi-Fi" data-reveal style="margin-top: 2.5rem">
+      <div class="device-rotator" role="region" aria-label="360 degree views of the kit we install" data-reveal style="margin-top: 2.5rem">
         <div class="dr-stage">
-
-          <!-- 1. NAS -->
-          <figure class="dr-item is-active" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="42" y="18" width="36" height="84" rx="7"/>
-                <rect x="49" y="28" width="22" height="13" rx="2.5"/>
-                <rect x="49" y="46" width="22" height="13" rx="2.5"/>
-                <rect x="49" y="64" width="22" height="13" rx="2.5"/>
-                <line x1="53" y1="34.5" x2="63" y2="34.5"/>
-                <line x1="53" y1="52.5" x2="63" y2="52.5"/>
-                <line x1="53" y1="70.5" x2="63" y2="70.5"/>
-                <circle cx="54" cy="92" r="2"/>
-                <circle class="dr-blink" cx="64" cy="92" r="2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Network storage</figcaption>
-          </figure>
-
-          <!-- 2. Security camera -->
-          <figure class="dr-item" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="30" y="42" width="50" height="24" rx="12"/>
-                <path d="M30 47 H78"/>
-                <circle cx="70" cy="54" r="7"/>
-                <circle cx="70" cy="54" r="2.6"/>
-                <circle class="dr-blink" cx="40" cy="54" r="2" fill="currentColor" stroke="none"/>
-                <path d="M50 66 V78"/>
-                <ellipse cx="50" cy="83" rx="14" ry="4"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Security cameras</figcaption>
-          </figure>
-
-          <!-- 3. Mac (iMac) -->
-          <figure class="dr-item" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="26" y="22" width="68" height="46" rx="5"/>
-                <line x1="36" y1="33" x2="58" y2="33"/>
-                <line x1="36" y1="41" x2="70" y2="41"/>
-                <line class="dr-cursor" x1="36" y1="49" x2="36" y2="58"/>
-                <path d="M55 68 L53 80 L67 80 L65 68"/>
-                <path d="M42 88 Q60 95 78 88"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Macs &amp; workstations</figcaption>
-          </figure>
-
-          <!-- 4. Wi-Fi mesh point -->
-          <figure class="dr-item" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path class="dr-arc dr-arc-1" d="M49 60 Q60 48 71 60"/>
-                <path class="dr-arc dr-arc-2" d="M42 58 Q60 38 78 58"/>
-                <path class="dr-arc dr-arc-3" d="M35 56 Q60 28 85 56"/>
-                <circle cx="60" cy="64" r="2.6" fill="currentColor" stroke="none"/>
-                <rect x="47" y="70" width="26" height="28" rx="9"/>
-                <circle cx="60" cy="84" r="2" fill="currentColor" stroke="none"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Whole-home Wi-Fi</figcaption>
-          </figure>
-
-          <!-- 5. Hard drive / SSD -->
-          <figure class="dr-item" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="26" y="28" width="68" height="64" rx="7"/>
-                <circle cx="52" cy="60" r="20"/>
-                <circle cx="52" cy="60" r="4" fill="currentColor" stroke="none"/>
-                <line class="dr-spin" x1="52" y1="60" x2="52" y2="42"/>
-                <path d="M86 40 L62 54"/>
-                <circle cx="86" cy="40" r="3"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Backups &amp; drives</figcaption>
-          </figure>
-
-          <!-- 6. Smart speaker -->
-          <figure class="dr-item" data-dr>
-            <span class="dr-art">
-              <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="44" y="26" width="32" height="68" rx="16"/>
-                <line x1="51" y1="50" x2="69" y2="50"/>
-                <line x1="51" y1="58" x2="69" y2="58"/>
-                <line x1="51" y1="66" x2="69" y2="66"/>
-                <line x1="51" y1="74" x2="69" y2="74"/>
-                <path class="dr-wave" d="M53 38 q3.5 -5 7 0 t7 0"/>
-              </svg>
-            </span>
-            <figcaption class="dr-caption">Smart home &amp; AI</figcaption>
-          </figure>
-
-        </div>
+<figure class="dr-item is-active" data-dr aria-hidden="false"><video class="dr-video" muted playsinline preload="auto" poster="media/nas.jpg" aria-label="Network storage rotating product view"><source src="media/nas.mp4" type="video/mp4"></video></figure>
+<figure class="dr-item" data-dr aria-hidden="true"><video class="dr-video" muted playsinline preload="none" poster="media/camera.jpg" aria-label="Security cameras rotating product view"><source src="media/camera.mp4" type="video/mp4"></video></figure>
+<figure class="dr-item" data-dr aria-hidden="true"><video class="dr-video" muted playsinline preload="none" poster="media/mac.jpg" aria-label="Macs &amp; workstations rotating product view"><source src="media/mac.mp4" type="video/mp4"></video></figure>
+<figure class="dr-item" data-dr aria-hidden="true"><video class="dr-video" muted playsinline preload="none" poster="media/wifi.jpg" aria-label="Whole-home Wi-Fi rotating product view"><source src="media/wifi.mp4" type="video/mp4"></video></figure>
+<figure class="dr-item" data-dr aria-hidden="true"><video class="dr-video" muted playsinline preload="none" poster="media/drive.jpg" aria-label="Backups &amp; drives rotating product view"><source src="media/drive.mp4" type="video/mp4"></video></figure>
+<figure class="dr-item" data-dr aria-hidden="true"><video class="dr-video" muted playsinline preload="none" poster="media/speaker.jpg" aria-label="Smart home &amp; AI rotating product view"><source src="media/speaker.mp4" type="video/mp4"></video></figure>
+</div>
+<p class="dr-caption" aria-live="off">Network storage</p>
+<div class="dr-controls"><button type="button" class="dr-prev" aria-label="Previous device">‹</button><button type="button" class="dr-pause">Pause rotation</button><button type="button" class="dr-next" aria-label="Next device">›</button></div>
       </div>
     </div>
   </section>
@@ -275,15 +188,7 @@
   </section>
 
   <!-- Profit tile -->
-  <section class="tile-section on-dark">
-    <div class="container" data-reveal>
-      <h2>Tech that gives back.</h2>
-      <!-- TODO before launch: name the charities and how the 50% is calculated -->
-      <p class="lead"><strong>50% of profits go to Hackney Children’s and Baby charities.</strong> Every setup helps local families — real impact, not empty words.</p>
-    </div>
-  </section>
-
-  <!-- CTA band -->
+<!-- CTA band -->
   <section class="band bg-canvas">
     <div class="container" data-reveal>
       <p class="eyebrow">Get started</p>
@@ -316,11 +221,11 @@
     <p><a class="footer-email" href="mailto:hello@roomfullofnerds.com">hello@roomfullofnerds.com</a></p>
     <p>Based in Hackney, London.</p>
     <!-- TODO if trading as a Ltd: registered name, company number, registered office, place of registration -->
-    <p class="tagline"><strong>Room Full of Nerds — Smart Homes, Smarter Systems.</strong><br>50% of profits go to Hackney Children’s and Baby charities.</p>
+    <p class="tagline"><strong>Room Full of Nerds — Smart Homes, Smarter Systems.</strong></p>
     <p class="footer-quip">Made in Hackney with strong coffee and stronger Wi-Fi.</p>
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script src="app.js?v=turntables1"></script>
 </body>
 </html>
