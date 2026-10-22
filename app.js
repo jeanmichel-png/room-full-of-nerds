@@ -18,6 +18,20 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
   }
 
+  /* Idle wink: blink the logo on its own at a random 3–20s cadence */
+  if (!reduceMotion) {
+    const lens = document.querySelector('.site-nav .logo .lens-l');
+    if (lens) {
+      const next = () => 3000 + Math.random() * 17000;
+      const blink = () => {
+        lens.classList.add('blink');
+        setTimeout(() => lens.classList.remove('blink'), 650);
+        setTimeout(blink, next());
+      };
+      setTimeout(blink, next());
+    }
+  }
+
   /* ---- Scroll progress bar ---- */
   const progress = document.querySelector('.scroll-progress');
   const parallaxEls = [...document.querySelectorAll('[data-parallax]')];
