@@ -106,33 +106,16 @@
   }
 })();
 
-/* Photorealistic product turntables: complete a turn before changing devices. */
+/* Photorealistic turntables — multi-up strip: each loops while it's on screen. */
 (() => {
- const root=document.querySelector('.device-rotator'); if(!root)return;
- const items=[...root.querySelectorAll('[data-dr]')], videos=items.map(el=>el.querySelector('video'));
- const labels=['Network storage','Security cameras','Macs & workstations','Whole-home Wi-Fi','Backups & drives','Smart home & AI'];
+ const strip=document.querySelector('.device-strip'); if(!strip)return;
+ const vids=[...strip.querySelectorAll('video')]; if(!vids.length)return;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const button=root.querySelector('.dr-pause'); let index=0, paused=reduced.matches, visible=false;
- const sync=()=>{videos.forEach((v,n)=>{if(n===index&&!paused&&visible&&!document.hidden){v.muted=true;v.play().catch(()=>{});}else v.pause();});button.textContent=paused?'Play rotation':'Pause rotation';};
- const show=n=>{videos[index].pause();index=(n+items.length)%items.length;items.forEach((el,i)=>{el.classList.toggle('is-active',i===index);el.setAttribute('aria-hidden',String(i!==index));});videos[index].currentTime=0;root.querySelector('.dr-caption').textContent=labels[index];sync();};
- videos.forEach(v=>v.addEventListener('ended',()=>{if(!paused)show(index+1);}));
- button.addEventListener('click',()=>{paused=!paused;sync();});
- root.querySelector('.dr-prev').addEventListener('click',()=>show(index-1));
- root.querySelector('.dr-next').addEventListener('click',()=>show(index+1));
- new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:0.15}).observe(root);
- document.addEventListener('visibilitychange',sync);
- reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});
- sync();
-
- /* rotate through the devices as you scroll through the section */
- if(!reduced.matches){
-  let last=scrollY; const STEP=170;
-  addEventListener('scroll',()=>{
-   const vh=innerHeight||document.documentElement.clientHeight;
-   const r=root.getBoundingClientRect();
-   if(r.bottom<0||r.top>vh){last=scrollY;return;}
-   const dy=scrollY-last;
-   if(Math.abs(dy)>=STEP){show(index+(dy>0?1:-1));last=scrollY;}
-  },{passive:true});
- }
+ const play=v=>{ if(!reduced.matches && !document.hidden){ v.muted=true; v.play().catch(()=>{}); } };
+ const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) play(e.target); else e.target.pause(); });
+ },{threshold:0.25});
+ vids.forEach(v=>io.observe(v));
+ document.addEventListener('visibilitychange',()=>{ if(document.hidden) vids.forEach(v=>v.pause()); });
+ reduced.addEventListener('change',()=>{ if(reduced.matches) vids.forEach(v=>v.pause()); });
 })();
