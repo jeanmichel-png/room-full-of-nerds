@@ -106,16 +106,21 @@
   }
 })();
 
-/* Photorealistic turntables — multi-up strip: each loops while it's on screen. */
+/* Photorealistic turntables — scrolling the strip scrubs each device's spin. */
 (() => {
  const strip=document.querySelector('.device-strip'); if(!strip)return;
  const vids=[...strip.querySelectorAll('video')]; if(!vids.length)return;
- const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const play=v=>{ if(!reduced.matches && !document.hidden){ v.muted=true; v.play().catch(()=>{}); } };
- const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) play(e.target); else e.target.pause(); });
- },{threshold:0.25});
- vids.forEach(v=>io.observe(v));
- document.addEventListener('visibilitychange',()=>{ if(document.hidden) vids.forEach(v=>v.pause()); });
- reduced.addEventListener('change',()=>{ if(reduced.matches) vids.forEach(v=>v.pause()); });
+ vids.forEach(v=>{ v.muted=true; v.pause(); try{v.load();}catch(e){} });
+ let ticking=false;
+ const scrub=()=>{
+  ticking=false;
+  const max=strip.scrollWidth-strip.clientWidth;
+  const p=max>0?Math.min(Math.max(strip.scrollLeft/max,0),1):0;
+  for(const v of vids){ const d=v.duration; if(isFinite(d)&&d>0){ const t=Math.min(p*d,d-0.01); if(Math.abs(v.currentTime-t)>0.02){ try{v.currentTime=t;}catch(e){} } } }
+ };
+ strip.addEventListener('scroll',()=>{ if(!ticking){ticking=true; requestAnimationFrame(scrub);} },{passive:true});
+ const by=()=>Math.max(Math.round(strip.clientWidth*0.7),180);
+ const prev=document.querySelector('.ds-prev'), next=document.querySelector('.ds-next');
+ if(prev) prev.addEventListener('click',()=>strip.scrollBy({left:-by(),behavior:'smooth'}));
+ if(next) next.addEventListener('click',()=>strip.scrollBy({left:by(),behavior:'smooth'}));
 })();
