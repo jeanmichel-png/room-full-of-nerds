@@ -128,8 +128,9 @@
  if(!reduced.matches){
   let last=scrollY; const STEP=170;
   addEventListener('scroll',()=>{
+   const vh=innerHeight||document.documentElement.clientHeight;
    const r=root.getBoundingClientRect();
-   if(r.bottom<0||r.top>innerHeight){last=scrollY;return;}
+   if(r.bottom<0||r.top>vh){last=scrollY;return;}
    const dy=scrollY-last;
    if(Math.abs(dy)>=STEP){show(index+(dy>0?1:-1));last=scrollY;}
   },{passive:true});

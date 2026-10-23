@@ -267,6 +267,66 @@ h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
   .device-rotator * { animation: none !important; }
 }
 
+/* ===== Service-card icons — scroll-in + hover micro-motion ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .services-grid.in .service-card .icon { animation: svc-pop 0.6s var(--ease) backwards; }
+  @keyframes svc-pop {
+    from { opacity: 0; transform: translateY(8px) scale(0.9); }
+    to   { opacity: 1; transform: none; }
+  }
+  .services-grid.in .service-card:nth-child(1) .icon { animation-delay: 0.10s; }
+  .services-grid.in .service-card:nth-child(2) .icon { animation-delay: 0.18s; }
+  .services-grid.in .service-card:nth-child(3) .icon { animation-delay: 0.26s; }
+  .services-grid.in .service-card:nth-child(4) .icon { animation-delay: 0.34s; }
+  .services-grid.in .service-card:nth-child(5) .icon { animation-delay: 0.42s; }
+  .services-grid.in .service-card:nth-child(6) .icon { animation-delay: 0.50s; }
+  .services-grid.in .service-card:nth-child(7) .icon { animation-delay: 0.58s; }
+  .services-grid.in .service-card:nth-child(8) .icon { animation-delay: 0.66s; }
+  .services-grid.in .service-card:nth-child(9) .icon { animation-delay: 0.74s; }
+
+  .service-card .icon svg { transition: transform 0.3s var(--ease); }
+  .service-card:hover .icon svg { transform: scale(1.06); }
+
+  .svc-spark, .svc-node, .svc-lock { transform-box: fill-box; transform-origin: center; }
+
+  .svc-tassel { transform-box: view-box; transform-origin: 20.5px 8px; }
+  .service-card:hover .svc-tassel { animation: svc-swing 1.1s var(--ease); }
+  @keyframes svc-swing { 0%,100% { transform: rotate(0); } 30% { transform: rotate(11deg); } 65% { transform: rotate(-7deg); } }
+
+  .service-card:hover .svc-spark { animation: svc-twinkle 1.1s var(--ease) infinite; }
+  @keyframes svc-twinkle { 0%,100% { transform: scale(1) rotate(0); opacity: 1; } 50% { transform: scale(0.7) rotate(25deg); opacity: 0.55; } }
+
+  .service-card:hover .svc-arrow { animation: svc-dip 1s var(--ease); }
+  @keyframes svc-dip { 0%,100% { transform: translateY(0); } 45% { transform: translateY(2px); } }
+
+  .svc-bkt-l, .svc-bkt-r { transition: transform 0.3s var(--ease); }
+  .service-card:hover .svc-bkt-l { transform: translateX(-1.2px); }
+  .service-card:hover .svc-bkt-r { transform: translateX(1.2px); }
+
+  .service-card:hover .svc-dot { animation: svc-blip 0.9s var(--ease) infinite; }
+  .service-card:hover .svc-dot-2 { animation-delay: 0.15s; }
+  .service-card:hover .svc-dot-3 { animation-delay: 0.30s; }
+  @keyframes svc-blip { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .svc-wrench { transform-box: view-box; transform-origin: 12px 12px; }
+  .service-card:hover .svc-wrench { animation: svc-nudge 1s var(--ease); }
+  @keyframes svc-nudge { 0%,100% { transform: rotate(0); } 35% { transform: rotate(-9deg); } 70% { transform: rotate(5deg); } }
+
+  .service-card:hover .svc-led { animation: svc-blip 1s var(--ease) infinite; }
+  .service-card:hover .svc-led-2 { animation-delay: 0.3s; }
+
+  .service-card:hover .svc-node { animation: svc-pulse 1.4s var(--ease) infinite; }
+  .service-card:hover .svc-node-2 { animation-delay: 0.2s; }
+  .service-card:hover .svc-node-3 { animation-delay: 0.4s; }
+  @keyframes svc-pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.22); opacity: 0.7; } }
+
+  .service-card:hover .svc-lock { animation: svc-lockbob 0.9s var(--ease); }
+  @keyframes svc-lockbob { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-1.6px); } }
+
+  .service-card:hover .svc-lens { animation: svc-blink 1.3s var(--ease) infinite; }
+  @keyframes svc-blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+}
+
 /* ===== Dark statement tile ===== */
 .tile-section { background: var(--tile); color: var(--on-dark); text-align: center; }
 .tile-section h2 { color: var(--on-dark); margin-bottom: 1.25rem; }
