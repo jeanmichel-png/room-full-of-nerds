@@ -106,19 +106,31 @@
   }
 })();
 
-/* Photorealistic turntables — scrolling the strip scrubs each device's spin. */
+/* Photorealistic turntables — page scroll AND strip scroll scrub each device's spin. */
 (() => {
  const strip=document.querySelector('.device-strip'); if(!strip)return;
  const vids=[...strip.querySelectorAll('video')]; if(!vids.length)return;
  vids.forEach(v=>{ v.muted=true; v.pause(); try{v.load();}catch(e){} });
+ const clamp=x=>x<0?0:x>1?1:x;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  let ticking=false;
  const scrub=()=>{
   ticking=false;
-  const max=strip.scrollWidth-strip.clientWidth;
-  const p=max>0?Math.min(Math.max(strip.scrollLeft/max,0),1):0;
+  const vh=innerHeight||document.documentElement.clientHeight||1;
+  const r=strip.getBoundingClientRect();
+  const vprog=clamp((vh - r.top)/(vh + r.height));           // vertical: section travels through viewport
+  const maxx=strip.scrollWidth-strip.clientWidth;
+  const hprog=maxx>0?clamp(strip.scrollLeft/maxx):0;          // horizontal: strip scroll
+  const p=clamp(vprog + hprog);
   for(const v of vids){ const d=v.duration; if(isFinite(d)&&d>0){ const t=Math.min(p*d,d-0.01); if(Math.abs(v.currentTime-t)>0.02){ try{v.currentTime=t;}catch(e){} } } }
  };
- strip.addEventListener('scroll',()=>{ if(!ticking){ticking=true; requestAnimationFrame(scrub);} },{passive:true});
+ const req=()=>{ if(!ticking){ticking=true; requestAnimationFrame(scrub);} };
+ if(!reduced){
+  addEventListener('scroll',req,{passive:true});
+  strip.addEventListener('scroll',req,{passive:true});
+  addEventListener('resize',req,{passive:true});
+  req();
+ }
  const by=()=>Math.max(Math.round(strip.clientWidth*0.7),180);
  const prev=document.querySelector('.ds-prev'), next=document.querySelector('.ds-next');
  if(prev) prev.addEventListener('click',()=>strip.scrollBy({left:-by(),behavior:'smooth'}));
