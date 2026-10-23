@@ -122,7 +122,7 @@
   const maxx=strip.scrollWidth-strip.clientWidth;
   const hprog=maxx>0?clamp(strip.scrollLeft/maxx):0;          // horizontal: strip scroll
   const p=clamp(vprog + hprog);
-  for(const v of vids){ const d=v.duration; if(isFinite(d)&&d>0){ const t=Math.min(p*d,d-0.01); if(Math.abs(v.currentTime-t)>0.02){ try{v.currentTime=t;}catch(e){} } } }
+  for(const v of vids){ const d=v.duration; if(isFinite(d)&&d>0){ const t=Math.min(((p+0.5)%1)*d,d-0.01); if(Math.abs(v.currentTime-t)>0.02){ try{v.currentTime=t;}catch(e){} } } }
  };
  const req=()=>{ if(!ticking){ticking=true; requestAnimationFrame(scrub);} };
  if(!reduced){
