@@ -123,4 +123,15 @@
  document.addEventListener('visibilitychange',sync);
  reduced.addEventListener('change',()=>{paused=reduced.matches;sync();});
  sync();
+
+ /* rotate through the devices as you scroll through the section */
+ if(!reduced.matches){
+  let last=scrollY; const STEP=170;
+  addEventListener('scroll',()=>{
+   const r=root.getBoundingClientRect();
+   if(r.bottom<0||r.top>innerHeight){last=scrollY;return;}
+   const dy=scrollY-last;
+   if(Math.abs(dy)>=STEP){show(index+(dy>0?1:-1));last=scrollY;}
+  },{passive:true});
+ }
 })();
